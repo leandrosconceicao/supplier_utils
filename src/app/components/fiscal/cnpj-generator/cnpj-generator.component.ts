@@ -56,8 +56,8 @@ export class CnpjGeneratorComponent implements OnInit {
     this.isLoading = !this.isLoading;
     this.servico.generateCnpj().subscribe({
       next: (data) => {
-        this.value = data.cnpj;
-        this.manageDataGenerated(data.cnpj);
+        this.value = data.cnpjFormatado.cnpj;
+        this.manageDataGenerated(data.cnpjFormatado.cnpj);
         this.isLoading = !this.isLoading;
         this.toast.success("CNPJ gerado com sucesso")
       },
@@ -97,10 +97,12 @@ export class CnpjGeneratorComponent implements OnInit {
       next: (value) => {
         this.isLoadingKey = !this.isLoadingKey;
         this.dialog.open(NotaFiscalKeyComponent, {
-          data: value.key
+          data: value.chaveAcesso
         })
       },
-      error: (err) => { }
+      error: (err) => {
+        this.toast.error("Houve um problema para gerar a chave de acesso")
+      }
     })
   }
 }

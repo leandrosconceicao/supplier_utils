@@ -48,7 +48,7 @@ export class XmlGeneratorComponent implements OnInit {
     this.xmlForm = new FormGroup({
       cnpjEmitente: new FormControl("", [Validators.required]),
       cnpjDestinatario: new FormControl("", [Validators.required]),
-      valorNf: new FormControl(0.0, [Validators.required]),
+      valorNf: new FormControl(0.0, [Validators.required, Validators.min(1)]),
       numeroParcelas: new FormControl(1),
       numeroPedido: new FormControl(""),
       dataEmissao: new FormControl(this.formatDate(new Date()), [Validators.required]),

@@ -61,13 +61,12 @@ export class NfChaveAcessoComponent implements OnInit {
     this.isLoading = !this.isLoading;
     this.service.generateNfKey(cnpj).subscribe({
       next: (data) => {
-        this.value = data.key;
-        this.manageDataGenerated(data.key);
+        this.value = data.chaveAcesso;
+        this.manageDataGenerated(data.chaveAcesso);
         this.isLoading = !this.isLoading;
         this.toast.success("Chave de acesso gerada com sucesso")
       },
       error: (err) => {
-        console.log(err);
         this.isLoading = !this.isLoading;
         this.toast.error("Houve um problema para gerar a chave de acesso")
       },

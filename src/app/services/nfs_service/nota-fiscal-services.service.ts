@@ -2,13 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import XmlForm from '../../types/xml_generator';
 import { environment } from "../../../environments/environment";
+import ChaveAcesso from '../../types/chave_acesso';
+import Cnpj from '../../types/cnpj';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotaFiscalService {
 
-  private url: string = environment.apiUrl;
+  private apiNfs: string = environment.apiNfsUrl;
+  private apiPosvendas: string = environment.apiPosVendasUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -19,21 +22,17 @@ export class NotaFiscalService {
 
   generateCnpj() {
 
-    return this.http.get<{
-      cnpj: string
-    }>(this.url, { headers: this.headers });
+    return this.http.get<Cnpj>(`${this.apiPosvendas}/Util/cnpj`, { headers: this.headers });
   }
 
-  generateNfKey(cnpj?: string) {
+  generateNfKey(cnpjEmitente?: string) {
 
-    return this.http.get<{
-      key: string
-    }>(`${this.url}/chaveDeAcesso?cnpj=${cnpj}`, { headers: this.headers });
+    return this.http.get<ChaveAcesso>(`${this.apiPosvendas}/Util/chaveDeAcesso?cnpjEmitente=${cnpjEmitente}`, { headers: this.headers });
   }
 
   getXml(data: XmlForm) {
     return this.http.post(
-      `${this.url}/gerarXml`,
+      `${this.apiNfs}/GerarNotaXml`,
       data,
       {
         responseType: 'blob' as 'json',
