@@ -1,5 +1,5 @@
 export const environment = {
     apiUrl: '',
-    apiNfsUrl: "",
-    apiPosVendasUrl: ""
+    apiNfsUrl: "https://apinfsdesenv.supplier.com.br",
+    apiPosVendasUrl: "https://apiposvendasdesenv.supplier.com.br"
 };
