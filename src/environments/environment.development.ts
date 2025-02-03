@@ -1,3 +1,4 @@
 export const environment = {
-    apiUrl: 'http://192.168.3.60:5001/api/mock'
+    apiNfsUrl: "https://apinfsdesenv.supplier.com.br",
+    apiPosVendasUrl: "https://apiposvendasdesenv.supplier.com.br"
 };
