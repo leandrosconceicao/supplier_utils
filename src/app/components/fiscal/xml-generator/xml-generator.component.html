@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-body">
+        <h5>Gerador de XML</h5>
+        <form [formGroup]="xmlForm" (ngSubmit)="getXml()" #formDir="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">Cnpj destinatário</label>
+                    <input placeholder="00.000.000/0000-00" formControlName="cnpjEmitente" mask="00.000.000/0000-00"
+                        type="text" aria-label="Cnpj destinatário" class="form-control{{(cnpjDest?.invalid && formDir.submitted) ? ' is-invalid' : ''}}" required>
+                    @if(cnpjDest?.invalid && formDir.submitted) {
+                        <div class="invalid-feedback">
+                            Campo inválido ou não foi preenchido
+                        </div>
+                    }
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Cnpj emitente</label>
+                    <input placeholder="00.000.000/0000-00" formControlName="cnpjDestinatario" mask="00.000.000/0000-00"
+                        type="text" aria-label="Cnpj emitente" class="form-control{{(cnpjEmit?.invalid && formDir.submitted) ? ' is-invalid' : ''}}" required>
+                    @if(cnpjEmit?.invalid && formDir.submitted) {
+                        <div class="invalid-feedback">
+                            Campo inválido ou não foi preenchido
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <app-default-input 
+                        formControlName="valorNf" 
+                        inputMask="separator.2" 
+                        thousandLimiter=""
+                        placeholder="R$ 0,00" 
+                        [isInvalid]="((valorNf?.invalid ?? false) && formDir.submitted)"
+                        invalidMessage="Campo inválido ou não preenchido"
+                        label="Valor da NF" required>
+                    </app-default-input>
+                </div>
+                <div class="col-4">
+                    <app-default-input inputMask="000000000" formControlName="numeroNf"
+                        label="Numero da NF"></app-default-input>
+                </div>
+                <div class="col-4">
+                    <app-default-input inputMask="000000000" formControlName="numeroPedido"
+                        label="Numero do pedido"></app-default-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label class="form-label">Parcelas</label>
+                    <select class="form-select" formControlName="numeroParcelas">
+                        @for (item of parcelas; track $index) {
+                        <option [value]="item">{{item}}x</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Data de emissão</label>
+                    <input class="form-control{{(emissionDate?.invalid && formDir.submitted) ? ' is-invalid' : ''}}" type="date" formControlName="dataEmissao">
+                </div>
+            </div>
+            @if(emissionDate?.invalid && formDir.submitted) {
+                <div class="invalid-feedback">
+                    Data de emissão é inválida
+                </div>
+            }
+            @if(numeroParcelas?.invalid && formDir.submitted) {
+                <div class="invalid-feedback">
+                    Número de parcelas é inválido ou não foi preenchido
+                </div>
+            }
+            <br>
+            <div class="btn-group">
+                <button class="btn btn-secondary" type="reset" (click)="clear()" matTooltip="Limpar formulário">
+                    <mat-icon aria-hidden="false" fontIcon="clear_all"></mat-icon>
+                </button>
+                <button class="btn btn-primary" type="submit" [disabled]="processing">
+                    @if(processing) {<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>}
+                    <span role="status">Gerar XML</span>
+                </button>
+            </div>
+        </form>
+        <br>
+        @if(downloadLink) {
+            <a href="{{downloadLink}}" download="file.xml">Clique aqui para baixar o arquivo XML</a>
+        }
+    </div>
+</div>

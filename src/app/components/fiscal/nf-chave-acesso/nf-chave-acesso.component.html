@@ -1,0 +1,50 @@
+<div class="card">
+    <div class="card-body">
+        <h5>Gerador de chave de acesso</h5>
+    <form class="row g-3" style="padding-bottom: 16px;" [formGroup]="keyGenForm">
+        <div class="input-group">
+            <input type="text" #cnpj class="form-control" mask="00.000.000/0000-00" aria-label="Cnpj" aria-describedby="button-addon2"
+                formControlName="cnpj"
+                placeholder="Cnpj"
+            >
+            <button class="btn btn-primary" type="button" [disabled]="isLoading" (click)="submit()">
+                @if(isLoading) {<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>}
+                <span role="status">Gerar Chave de acesso</span>
+            </button>
+        </div>
+    </form>
+    @if(value) {
+        <label>
+            Chave de Acesso gerada
+        </label>
+        <div class="input-group">
+            <input type="text" readonly class="form-control" aria-label="Cnpj" aria-describedby="button-addon2" [value]="value">
+            <button class="btn btn-secondary" type="button" matTooltip="Copiar" (click)="copyData()">
+                <mat-icon aria-hidden="false" fontIcon="content_copy"></mat-icon>
+            </button>
+        </div>
+        <br>
+    }
+    @if(dataGenerated.length) { 
+        <table class="table table-bordered">
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col" colspan="2">Últimas chaves geradas</th>
+                    <!-- <th scope="col"></th> -->
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of dataGenerated; track $index) {
+                    <tr style="text-align: center;">
+                        <th scope="row">{{$index + 1}}</th>
+                        <td>{{item}}</td>
+                        <!-- <td>
+                            
+                        </td> -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    </div>
+</div>

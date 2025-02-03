@@ -1,0 +1,16 @@
+<label class="form-label" [for]="inputName">{{ label }}</label>
+<input 
+    [mask]="inputMask"
+    class="form-control {{isInvalid ? ' is-invalid' : ''}}"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="onInput($event)"
+    [leadZero]="leadZero"
+    [thousandSeparator]="thousandLimiter"
+    [type]="inputType"
+/>
+@if(isInvalid) {
+    <div class="invalid-feedback">
+        {{invalidMessage}}
+    </div>
+}

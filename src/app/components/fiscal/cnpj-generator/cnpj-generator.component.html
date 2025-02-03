@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-body">
+        <h5>Gerador de CNPJ</h5>
+        <form class="row g-3">
+            <div class="input-group">
+                <input type="text" class="form-control" readonly aria-label="Cnpj gerado"
+                    aria-describedby="button-addon2" [value]="value">
+                @if(value) {
+                    <button class="btn btn-secondary" type="button" matTooltip="Copiar" (click)="copyData()">
+                        <mat-icon aria-hidden="false" fontIcon="content_copy"></mat-icon>
+                    </button>
+                }
+                <button class="btn btn-primary" type="button" [disabled]="isLoading" (click)="generateCnpj()">
+                    @if(isLoading) {<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>}
+                    <span role="status">Gerar Cnpj</span>
+                </button>
+            </div>
+        </form>
+        <br>
+        @if(dataGenerated.length) {
+        <table class="table table-bordered">
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col" colspan="2">Últimos cnpjs gerados</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of dataGenerated; track $index) {
+                <tr style="text-align: center;">
+                    <td>
+                        <div class="row">
+                            <div class="col-9" #cnpjValue>
+                                {{item}}
+                            </div>
+                            <div class="col-3">
+                                <button mat-icon-button [disabled]="isLoadingKey" matTooltip="Gerar chave de acesso" (click)="generateKey(item)">
+                                    @if(isLoadingKey) {
+                                        <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+                                    } @else {
+                                        <mat-icon aria-hidden="false" fontIcon="key"></mat-icon>
+                                    }
+
+                                </button>
+                                <!-- <button class="btn btn-secondary btn-sm" type="button" [disabled]="isLoadingKey" matTooltip="Gerar chave de acesso" (click)="generateKey(item)">
+                                </button> -->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+</div>
